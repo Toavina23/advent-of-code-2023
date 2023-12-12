@@ -1,11 +1,11 @@
 package main
 
 import (
-	"day2"
+	"day3"
 	"fmt"
 )
 
 func main() {
 	fmt.Println("Advent of code 2023")
-	day2.Part1()
+	day3.Part1()
 }
