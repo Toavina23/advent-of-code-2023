@@ -7,5 +7,5 @@ import (
 
 func main() {
 	fmt.Println("Advent of code 2023")
-	day3.Part1()
+	day3.Solution()
 }
