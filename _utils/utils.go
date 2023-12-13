@@ -17,7 +17,7 @@ func ReadInputFile(fileName string) []string {
 	return strings.Split(strContent, "\r\n")
 }
 
-func IsInArray(target string, array []string) bool {
+func IsInArray[T comparable](target T, array []T) bool {
 	for _, element := range array {
 		if element == target {
 			return true
