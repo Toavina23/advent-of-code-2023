@@ -51,8 +51,41 @@ func countMatch(input string) int {
 	}
 	return match
 }
+func part2() {
+	inputs := utils.ReadInputFile("./day4/input.txt")
+	var queue []string
+	var cardMappings = make(map[string]int)
+	queue = append(queue, inputs...)
+	for {
+		if len(queue) == 0 {
+			break
+		}
+		currentInput := queue[0]
+		queue = queue[1:]
+		mapKey := strings.Trim(strings.Split(strings.Split(currentInput, ":")[0], "Card")[1], " ")
+		value, ok := cardMappings[mapKey]
+		if ok {
+			cardMappings[mapKey] = value + 1
+		} else {
+			cardMappings[mapKey] = 1
+		}
+		matches := countMatch(currentInput)
+		gameNumber, err := strconv.Atoi(mapKey)
+		if err != nil {
+			panic(err)
+		}
+		for i := gameNumber; i < gameNumber+matches; i++ {
+			queue = append(queue, inputs[i])
+		}
+	}
+	cardNumbers := 0
+	for _, value := range cardMappings {
+		cardNumbers += value
+	}
+	fmt.Println(cardNumbers)
+}
 
-func Solution() {
+func part1() {
 	inputs := utils.ReadInputFile("./day4/input.txt")
 	pointsTotal := 0
 	for _, input := range inputs {
@@ -60,4 +93,10 @@ func Solution() {
 		pointsTotal += int(math.Pow(2, float64(matches-1)))
 	}
 	fmt.Println(pointsTotal)
+}
+func Solution() {
+	fmt.Println("Part 1")
+	part1()
+	fmt.Println("Part 2")
+	part2()
 }
