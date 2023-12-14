@@ -36,6 +36,9 @@ func StrToNumberArray(str string, separator string) []int {
 	parts := strings.Split(str, separator)
 	var result []int
 	for _, part := range parts {
+		if part == "" {
+			continue
+		}
 		value, err := strconv.Atoi(part)
 		if err != nil {
 			panic(err)
