@@ -16,9 +16,18 @@ type SeedToLocation struct {
 	seed     int
 	location int
 }
+
 type SeedPair struct {
 	seed      int
 	seedRange int
+}
+
+func computeSeedPairs(seedData []int) []SeedPair {
+	var seedPairs []SeedPair
+	for i := 0; i < len(seedData)-1; i += 2 {
+		seedPairs = append(seedPairs, SeedPair{seed: seedData[i], seedRange: seedData[i+1]})
+	}
+	return seedPairs
 }
 
 func organiseInput(path string) ([]int, map[int][]ElementData) {
@@ -71,8 +80,7 @@ func getMapping(elementData []ElementData, key int, mapList *[]int) {
 	val := getMapValue(key, elementData)
 	*mapList = append(*mapList, val)
 }
-
-func Solution() {
+func Part1() {
 	seeds, parameterMap := organiseInput("./day5/input.txt")
 	var seedsToLocations []SeedToLocation
 	for _, seed := range seeds {
@@ -90,5 +98,14 @@ func Solution() {
 	sort.Slice(seedsToLocations, func(i, j int) bool {
 		return seedsToLocations[i].location < seedsToLocations[j].location
 	})
+	fmt.Println("Part 1")
 	fmt.Printf("The nearest is %+v\n", seedsToLocations[0])
+}
+
+func Part2() {
+}
+
+func Solution() {
+	Part1()
+	Part2()
 }
