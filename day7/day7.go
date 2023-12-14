@@ -22,7 +22,7 @@ var cardsMap = map[string]int{
 	"A": 14,
 	"K": 13,
 	"Q": 12,
-	"J": 11,
+	"J": 1,
 	"T": 10,
 	"9": 9,
 	"8": 8,
@@ -58,18 +58,30 @@ func compareHand(hand1 string, hand2 string) int {
 func evaluateHand(hand string) []int {
 	cardMap := make(map[string]int)
 	var occurences []int
+	jokerCount := 0
 	for _, e := range hand {
+		if string(e) == "J" {
+			jokerCount++
+			continue
+		}
 		val, ok := cardMap[string(e)]
 		if ok {
 			cardMap[string(e)] = val + 1
 		} else {
-			cardMap[string(e)] = 0
+			cardMap[string(e)] = 1
 		}
 	}
 	for _, v := range cardMap {
 		occurences = append(occurences, v)
 	}
 	sort.Sort(sort.Reverse(sort.IntSlice(occurences)))
+	if jokerCount > 0 {
+		if len(occurences) != 0 {
+			occurences[0] = occurences[0] + jokerCount
+		} else {
+			occurences = append(occurences, jokerCount)
+		}
+	}
 	return occurences
 }
 
@@ -89,10 +101,7 @@ func Solution() {
 		return compareHand(hands[i].cards, hands[j].cards) == 1
 	})
 	sum := 0
-	fmt.Println("hand classement")
 	for i, hand := range hands {
-		// fmt.Printf("%s => %d\n", hand.cards, i)
-		// fmt.Printf("%d * %d\n", hand.bid, i+1)
 		sum += hand.bid * (i + 1)
 	}
 	fmt.Println(sum)
