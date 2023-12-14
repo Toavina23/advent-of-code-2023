@@ -2,6 +2,7 @@ package utils
 
 import (
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -28,4 +29,18 @@ func IsInArray[T comparable](target T, array []T) bool {
 
 func IsNumber(target string) bool {
 	return IsInArray(target, NUMBERS)
+}
+
+func StrToNumberArray(str string, separator string) []int {
+	str = strings.Trim(str, " ")
+	parts := strings.Split(str, separator)
+	var result []int
+	for _, part := range parts {
+		value, err := strconv.Atoi(part)
+		if err != nil {
+			panic(err)
+		}
+		result = append(result, value)
+	}
+	return result
 }
